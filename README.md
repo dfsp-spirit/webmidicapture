@@ -1,10 +1,16 @@
 # webmidiplayground
-Messing with MIDI in the browser.
-
-Some tests:
+Messing with MIDI in the browser via the Web MIDI Api.
 
 
-# MIDI event capturing test
+## A note on browser support
+
+Note that while recent versions of Chrome, Edge and Opera support the Web MIDI Api. In Firefox it seems more complicated: while it has had support for quite a while according to [caniuse](https://caniuse.com/midi), at least locally via file:// URLs, it does not seem to work for me in Firefox 135, the latest version as of 2/9/2025. This may be intentional because according to the FF documentation, usage of the API is only supported in secure contexts (https://).
+
+
+## Some tests
+
+
+### MIDI event capturing test
 
 See [./midi_capture/ directory](./midi_capture/).
 
