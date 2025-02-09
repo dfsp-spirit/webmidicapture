@@ -4,9 +4,11 @@ Messing with MIDI in the browser via the Web MIDI Api.
 
 ## A note on browser support and local development / testing
 
-Recent versions of Firefox, Chrome, Edge and Opera support the Web MIDI Api.
+Recent versions of Firefox, Chrome, Edge and Opera support the Web MIDI Api (see [caniuse](https://caniuse.com/midi)).
 
-When testing locally, the situation in Firefox (FF) is a bit more complicated than in Chrome though: while FF has had support for quite a while according to [caniuse](https://caniuse.com/midi), at least locally via `file://` URLs, it does not seem to work for me in Firefox 135, the latest version as of 2/9/2025. This may be intentional because according to the FF documentation, usage of the API is only supported in *secure contexts* (`https://`). I tried serving the directory via python's built-in web server and it worked then (http:// is fine as long as it's on localhost, accoring to the FF docs that combination is considered a secure context). So try ```python -m http.server 8000``` in the local directory with the HTML/JS file for local testing, and you should be fine with FF.
+When testing locally, I noticed that the situation in Firefox (FF) is a bit more complicated though: while FF has had Web MIDI support for quite a while according to [caniuse](https://caniuse.com/midi), at least locally via `file://` URLs, it did not work for me in Firefox 135, the latest version as of 2/9/2025. This may be intentional because according to the [FF documentation on the Web MIDI Api](https://developer.mozilla.org/en-US/docs/Web/API/Web_MIDI_API), usage of the API is only supported in *secure contexts* (e.g., `https://`). So I tried serving the directory via python's built-in web server and it worked then (http:// is fine as long as it's on localhost, accoring to the FF docs that combination is considered a secure context). So try ```python -m http.server 8000``` in the local directory with the HTML/JS file for local testing, and you should be fine with FF. This also means if using it remotely, you should make sure to enable HTTPS on your web server.
+
+To test locally via `file://`, I would recommend to simply use Chrome.
 
 
 ## Some tests
