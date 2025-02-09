@@ -2,9 +2,11 @@
 Messing with MIDI in the browser via the Web MIDI Api.
 
 
-## A note on browser support
+## A note on browser support and local development / testing
 
-Note that while recent versions of Chrome, Edge and Opera support the Web MIDI Api. In Firefox it seems more complicated: while it has had support for quite a while according to [caniuse](https://caniuse.com/midi), at least locally via file:// URLs, it does not seem to work for me in Firefox 135, the latest version as of 2/9/2025. This may be intentional because according to the FF documentation, usage of the API is only supported in secure contexts (https://).
+Recent versions of Firefox, Chrome, Edge and Opera support the Web MIDI Api.
+
+When testing locally, the situation in Firefox (FF) is a bit more complicated than in Chrome though: while FF has had support for quite a while according to [caniuse](https://caniuse.com/midi), at least locally via `file://` URLs, it does not seem to work for me in Firefox 135, the latest version as of 2/9/2025. This may be intentional because according to the FF documentation, usage of the API is only supported in *secure contexts* (`https://`). I tried serving the directory via python's built-in web server and it worked then (http:// is fine as long as it's on localhost, accoring to the FF docs that combination is considered a secure context). So try ```python -m http.server 8000``` in the local directory with the HTML/JS file for local testing, and you should be fine with FF.
 
 
 ## Some tests
