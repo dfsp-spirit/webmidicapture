@@ -6,7 +6,7 @@ Some tests:
 
 # MIDI event capturing test
 
-See [here](./midi_capture/).
+See [./midi_capture/ directory](./midi_capture/).
 
 You can use a hardware MIDI generator like a keyboard, but for testing purposes a virtual MIDI keyboard like [VPMK](https://vmpk.sourceforge.io/) will do just as fine.
 
