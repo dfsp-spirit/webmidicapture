@@ -33,11 +33,11 @@ I have its output attached to [loopMIDI](https://www.tobias-erichsen.de/software
 
 If you do not have a physical MIDI instrument, you will need loopMIDI though. Make sure to start it, create a port (simply click the `Add Port` button labeled `+` on the Setup tab once) and make sure to keep the software running. Running it minified is fine, but it needs to run and have a port configured:
 
-![WebMIDI](./setup_loopmidi.jpg)
+![WebMIDI](./midi_capture/setup_loopmidi.jpg)
 
  The in your virtual MIDI controller like VMPK, configure MIDI routing and set the port you created in loopMIDI as the MIDI output:
 
- ![WebMIDI](./setup_vmpk.jpg)
+ ![WebMIDI](./midi_capture/setup_vmpk.jpg)
 
 The Web MIDI API, which is integrated in recent Chrome versions and other browsers, can then pick up the MIDI signals and make them available to your Javascript code (users need to allow MIDI access, like for the camera and mic). For now we simply display the MIDI events on key presses:
 
