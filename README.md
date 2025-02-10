@@ -1,5 +1,5 @@
 # webmidiplayground
-Messing with MIDI in the browser via the Web MIDI Api.
+Messing with MIDI in the browser via the Web MIDI Api. A proof-of-concept.
 
 
 ## A note on browser support
