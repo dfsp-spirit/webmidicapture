@@ -11,6 +11,24 @@ function onMIDISuccess(midiAccess) {
     console.log('MIDI Access Successful');
     document.getElementById('status').innerText = 'MIDI access granted. Waiting for messages...';
 
+    const inputs = midiAccess.inputs;
+    console.log('MIDI Input Devices:');
+    inputs.forEach((input) => {
+        console.log(`Input: ${input.name} (ID: ${input.id})`);
+    });
+
+    // List all MIDI output devices
+    const outputs = midiAccess.outputs;
+    console.log('MIDI Output Devices:');
+    outputs.forEach((output) => {
+        console.log(`Output: ${output.name} (ID: ${output.id})`);
+    });
+
+    // You can also listen for device connection/disconnection events
+    midiAccess.onstatechange = (event) => {
+        console.log('MIDI device state changed:', event.port);
+    };
+
     // Iterate over all MIDI input devices
     midiAccess.inputs.forEach((input) => {
         input.onmidimessage = handleMIDIMessage; // Set up the message handler
@@ -35,3 +53,4 @@ function handleMIDIMessage(event) {
     // Display message on the page (for example, MIDI note information)
     document.getElementById('status').innerText = `MIDI Message: [status: ${status}, note: ${note}, velocity: ${velocity}]`;
 }
+
