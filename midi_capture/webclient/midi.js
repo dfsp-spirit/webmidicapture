@@ -61,9 +61,27 @@ function onMIDISuccess(midiAccess) {
     console.log('MIDI Access Successful');
     document.getElementById('status').innerText = 'MIDI access granted. Waiting for MIDI messages. Play your instrument or a virtual device like VMPK...';
 
-    // Iterate over all MIDI input devices
+    // List all MIDI input devices in console
+    const inputs = midiAccess.inputs;
+    console.log(`Found ${inputs.size} MIDI Input Devices:`);
+    inputs.forEach((input) => {
+        console.log(` * Input: ${input.name} (ID: ${input.id})`);
+    });
+
+    // List all MIDI output devices in console
+    const outputs = midiAccess.outputs;
+    console.log(`Found ${outputs.size} MIDI Output Devices:`);
+    outputs.forEach((output) => {
+        console.log(` * Output: ${output.name} (ID: ${output.id})`);
+    });
+
+    // Listen for device connection/disconnection events
+    midiAccess.onstatechange = (event) => {
+        console.log('MIDI device state changed:', event.port);
+    };
+
+    // Iterate over all MIDI input devices and listed for incoming messages
     midiAccess.inputs.forEach((input) => {
-        console.log('Input device:', input.name);
         input.onmidimessage = handleMIDIMessage; // Set up the message handler
     });
 }
