@@ -17,11 +17,12 @@ def handle_message(message):
             raise ValueError("Invalid message format")
         print(f"Received MIDI data: {message}")
         # Send a success response
-        send({"status": "success", "data": message})
+        print(f"Response sent: {message}")
+        return({"status": "success", "data": message})
     except Exception as e:
         # Send an error response
         print(f"Error: {e}")
-        send({"status": "error", "error": str(e)})
+        return({"status": "error", "error": str(e)})
 
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0', port=5000)

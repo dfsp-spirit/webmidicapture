@@ -1,6 +1,6 @@
 // Start the WebSocket connection with the server
 
-const send_to_server = false; // Set to true to send MIDI data to the server, false to display it in the console.
+const send_to_server = true; // Set to true to send MIDI data to the server, false to display it in the console.
 let socket = null;
 if (send_to_server) {
     document.getElementById('server_status').innerText = `Sending data to server is turned on.`;
@@ -32,11 +32,14 @@ if (send_to_server) {
 function sendMidiData(midiData) {
     if(send_to_server) {
         socket.emit('message', midiData, (response) => {
-            if (response.error) {
+            console.log("response: ", response);
+            if (response && response.error) {
                 console.error('Error sending MIDI data:', response.error);
+                document.getElementById('server_status').innerText = `Error sending MIDI data: ${response.error}`;
                 // Handle the error (e.g., retry, notify the user, etc.)
             } else {
                 console.log('MIDI data sent successfully:', response);
+                document.getElementById('server_status').innerText = `MIDI data sent successfully: ${JSON.stringify(response)}`;
             }
         });
     } else {
