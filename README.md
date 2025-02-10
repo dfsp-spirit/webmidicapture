@@ -27,11 +27,22 @@ Keep in mind that the Firefox limitation or security measure mentioned in the la
 
 See [./midi_capture/ directory](./midi_capture/).
 
-You can use a hardware MIDI generator like a keyboard, but for testing purposes a virtual MIDI keyboard like [VPMK](https://vmpk.sourceforge.io/) will do just as fine.
+You can use a hardware MIDI generator like a keyboard, but for testing purposes a virtual MIDI keyboard like [VMPK](https://vmpk.sourceforge.io/) will do just as fine.
 
-I have its output attached to [loopMIDI](https://www.tobias-erichsen.de/software/loopmidi.html), and from there into FL Studio to synthesize sounds from the MIDI signals, but that is entirely optional. We are only interested in the raw MIDI signals here, so if you're fine with not hearing anything or using the default Windows software sythesizer, you do not need this.
+I have its output attached to [loopMIDI](https://www.tobias-erichsen.de/software/loopmidi.html), and from there into FL Studio to synthesize sounds from the MIDI signals, but the FL Studio part is entirely optional of course. We are only interested in the raw MIDI signals here, so if you're fine with using the default software sythesizer, you do not need a separate DAW.
 
-The Web MIDI API, which is integrated in recent Chrome versions and other browsers, can then pick up the MIDI signals and make them available to your Javascript code. For now we simply display them on key presses:
+If you do not have a physical MIDI instrument, you will need loopMIDI though. Make sure to start it, create a port (simply click the `Add Port` button labeled `+` on the Setup tab once) and make sure to keep the software running. Running it minified is fine, but it needs to run and have a port configured. The in your virtual MIDI controler like VMPK, configure MIDI routing and set the port you created in loopMIDI as the MIDI output.
+
+The Web MIDI API, which is integrated in recent Chrome versions and other browsers, can then pick up the MIDI signals and make them available to your Javascript code (users need to allow MIDI access, like for the camera and mic). For now we simply display the MIDI events on key presses:
 
 
 ![WebMIDI](./midi_capture/webmiditest.jpg)
+
+### Client / Server fun
+
+This repo now also contains a websocket server based on Python/Flask. If `send_to_server` is set to `true` in webclient\midi.js, the browser will send the MIDI data to the backend server, and the server will reply to confirm that it received the data. The server response is displayed in the browser.
+
+To start the server, install `flask_socketio` via pip, then run `python flask_websocket_server.py` in the server directory.
+
+Now open the client in your browser and play some piano.
+
