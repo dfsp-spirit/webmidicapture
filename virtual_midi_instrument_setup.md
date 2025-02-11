@@ -15,4 +15,6 @@ You will also need a virtual MIDI cable to make your virtual device appear as a 
 
 ## Using a custom software sythesizer
 
-The VMPK tool comes with its own software sythesizer to play sounds from the MIDI events, but you can of course use a custom software sythesizer if you prefer. I have its output attached to [loopMIDI](https://www.tobias-erichsen.de/software/loopmidi.html), and from there into FL Studio to synthesize sounds from the MIDI signals, but the FL Studio part is entirely optional of course. We are only interested in the raw MIDI signals here, so if you're fine with using the default software sythesizer, you do not need a separate DAW.
+The VMPK tool comes with its own software sythesizer to play sounds from the MIDI events, but you can of course use a custom software sythesizer if you prefer. To do this, make sure you have a everything configured as described above.
+
+Then, start you custom sythesizer software (e.g., a DAW like FL Studio) and configure the MIDI connections in it. You need to attach the output of the loopMIDI port as the input to your DAW. This will allow you to use all the instruments available in your DAW.
