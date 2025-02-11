@@ -11,21 +11,52 @@
     <h3>Settings</h3>
 
     <div>
-        <p><span id="setting_use_server_status">Not sending data to server.</span></p>
+        <p style="text-indent: 10px;"><span id="setting_use_server_status">Not sending data to server.</span>
         <button id="toggleUseServerButton">Toggle use server</button>
+        </p>
     </div>
 
-    <h3 id="heading_status">Status</h3>
+    <h3 id="heading_status">Local MIDI Event Capturing Status</h3>
 
-    <p id="p_midi_status">
+    <p id="p_midi_status" style="text-indent: 10px;">
         <span id="status_label"><i>MIDI Status:</i></span>
         <span id="status">current MIDI Status here</span>
     </p>
 
+    <h3 id="heading_status">Server Communication Status</h3>
 
-    <p id="p_server_status">
+    <p id="p_server_status" style="text-indent: 10px;">
         <span id="server_status_label"><i>Server Connection Status / Response:</i></span>
         <span id="server_status">current server Status here</span>
+    </p>
+    <hr />
+    <h4>Timing info</h3>
+    <p id="p_timing_info_capture_to_server" style="text-indent: 10px;">
+        Timing info MIDI event to server (ms):
+        <span id="timing_info_midi_event_to_server"></span>
+    </p>
+    <p id="p_timing_stats_capture_to_server"  style="text-indent: 20px;">
+        - Stats (ms):
+        <span id="timing_stats_midi_event_to_server"></span>
+    </p>
+    <hr />
+    <p id="p_timing_info_roundtrip"  style="text-indent: 10px;">
+        Timing info MIDI event to server and back to client (ms):
+        <span id="timing_info_midi_event_to_server_to_client"></span>
+    </p>
+    <p id="p_timing_stats_roundtrip"  style="text-indent: 20px;">
+        - Stats (ms):
+        <span id="timing_stats_midi_event_to_server_to_client"></span>
+    </p>
+    <hr />
+    <h4>Total MIDI messages sent over the network</h3>
+    <p id="p_server_stats_send"  style="text-indent: 10px;">
+        Number of MIDI messages sent to server:
+        <span id="stats_num_server_midi_messages_sent">0</span>
+    </p>
+    <p id="p_server_stats_received"  style="text-indent: 10px;">
+        Number of positive responses received from server:
+        <span id="stats_num_server_responses_received">0</span>
     </p>
 
 

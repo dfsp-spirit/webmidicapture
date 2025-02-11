@@ -2,10 +2,37 @@
 
 let send_to_server = false; // Set to true to send MIDI data to the server, false to display it in the console.
 let socket = null;
+let num_midi_messages_sent = 0;
+let num_midi_server_responses_received = 0;
+let timings_event_to_server = [];
+let timings_event_to_server_to_browser = [];
+
+// Add a timing event to the list of event durations, keep at most the latest n durations
+const num_to_keep = 50;
+function addDurationEventToServer(num) {
+    timings_event_to_server.push(num);
+    if (timings_event_to_server.length > num_to_keep) timings_event_to_server.splice(0, 1); // Remove the first (oldest) element
+}
+
+function addDurationEventToServerToBrowser(num) {
+    timings_event_to_server_to_browser.push(num);
+    if (timings_event_to_server_to_browser.length > num_to_keep) timings_event_to_server_to_browser.splice(0, 1); // Remove the first (oldest) element
+}
+
+// Compute some simple statistics (max, min, mean) for an array of numbers
+function stats(arr) {
+    return {
+      max: Math.max(...arr),
+      min: Math.min(...arr),
+      mean: arr.reduce((sum, num) => sum + num, 0) / arr.length
+    };
+  }
+
+
 
 function handleSendToServerChanged(send_to_server) {
     if (send_to_server) {
-        document.getElementById('server_status').innerText = `Sending data to server is turned on.`;
+        document.getElementById('server_status').innerText = `Sending data to server is turned on, but no event sent yet.`;
         socket = io('http://localhost:5000'); // WebSocket server address, see server/ directory.
 
         // Listen for connection errors
@@ -48,17 +75,38 @@ document.getElementById("toggleUseServerButton").addEventListener("click", funct
 
 function sendMidiData(midiData) {
     if(send_to_server) {
-        socket.emit('message', midiData, (response) => {
+        num_midi_messages_sent++;
+
+        socket.emit('midi_message', midiData, (response) => {
             console.log("response: ", response);
             if (response && response.error) {
-                console.error('Error sending MIDI data:', response.error);
+                console.error('Error sending MIDI data. Server replied with error: ', response.error);
                 document.getElementById('server_status').innerText = `Error sending MIDI data: ${response.error}`;
                 // Handle the error (e.g., retry, notify the user, etc.)
             } else {
-                console.log('MIDI data sent successfully:', response);
+                console.log('MIDI data sent successfully, received server response:', response);
+                num_midi_server_responses_received++;
+                const timestamp_server_response_received_in_browser = Date.now(); // Timestamp in milliseconds since the Unix epoch (1970-01-01)
+                response.timestamp_server_response_received_in_browser = timestamp_server_response_received_in_browser;
+                console.log(`response.data.timestamp_webmidiapi_event_received: ${response.data.timestamp_webmidiapi_event_received}, response.data.timestamp_websocket_server_received: ${response.data.timestamp_websocket_server_received}`);
+                const duration_event_to_server = response.data.timestamp_websocket_server_received - response.data.timestamp_webmidiapi_event_received;
+                const duration_event_to_server_to_browser = timestamp_server_response_received_in_browser - response.data.timestamp_webmidiapi_event_received;
+                addDurationEventToServer(duration_event_to_server);
+                addDurationEventToServerToBrowser(duration_event_to_server_to_browser);
                 document.getElementById('server_status').innerText = `MIDI data sent successfully: ${JSON.stringify(response)}`;
             }
         });
+        // Update stats on the page
+        document.getElementById('stats_num_server_midi_messages_sent').innerText = num_midi_messages_sent;
+        document.getElementById('stats_num_server_responses_received').innerText = num_midi_server_responses_received;
+        // Update timings on the page
+        document.getElementById('timing_info_midi_event_to_server').innerText = timings_event_to_server.join(', ');
+        document.getElementById('timing_info_midi_event_to_server_to_client').innerText = timings_event_to_server_to_browser.join(', ');
+        // Update timing stats on the page
+        const stats_event_to_server = stats(timings_event_to_server);
+        const stats_event_to_server_to_browser = stats(timings_event_to_server_to_browser);
+        document.getElementById('timing_stats_midi_event_to_server').innerText = `Max: ${stats_event_to_server.max}, Min: ${stats_event_to_server.min}, Mean: ${stats_event_to_server.mean}`;
+        document.getElementById('timing_stats_midi_event_to_server_to_client').innerText = `Max: ${stats_event_to_server_to_browser.max}, Min: ${stats_event_to_server_to_browser.min}, Mean: ${stats_event_to_server_to_browser.mean}`;
     } else {
         console.log('MIDI data:', midiData);
     }
@@ -97,7 +145,7 @@ function onMIDISuccess(midiAccess) {
         console.log('MIDI device state changed:', event.port);
     };
 
-    // Iterate over all MIDI input devices and listed for incoming messages
+    // Iterate over all MIDI input devices and listen for incoming messages
     midiAccess.inputs.forEach((input) => {
         input.onmidimessage = handleMIDIMessage; // Set up the message handler
     });
@@ -111,14 +159,15 @@ function onMIDIFailure() {
 
 // Handle incoming MIDI messages
 function handleMIDIMessage(event) {
+    const timestamp_webmidiapi_event_received = Date.now(); // Timestamp in milliseconds since the Unix epoch (1970-01-01)
     const data = event.data;
     const status = data[0]; // MIDI message type
     const note = data[1];   // MIDI note number (if applicable)
     const velocity = data[2]; // MIDI velocity (if applicable)
 
-    console.log(`MIDI Message: [status: ${status}, note: ${note}, velocity: ${velocity}]`);
+    console.log(`MIDI Message: [status: ${status}, note: ${note}, velocity: ${velocity}, timestamp_webmidiapi_event_received: ${timestamp_webmidiapi_event_received}]`);
     if (send_to_server) {
-        sendMidiData({ status, note, velocity }); // Send the MIDI message to the server
+        sendMidiData({ status, note, velocity, timestamp_webmidiapi_event_received }); // Send the MIDI message to the server
     }
 
     // Display message on the page (for example, MIDI note information)
