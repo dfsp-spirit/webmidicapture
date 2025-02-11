@@ -4,7 +4,7 @@ Messing with MIDI in the browser via the Web MIDI Api. A proof-of-concept.
 
 ## A note on browser support
 
-Recent versions of Firefox, Chrome, Edge and Opera support the Web MIDI Api (see [caniuse](https://caniuse.com/midi)).
+Recent versions of Firefox, Chrome, Edge and Opera support the Web MIDI Api (see [caniuse.com](https://caniuse.com/midi)).
 
 ### Local development and testing
 
@@ -20,35 +20,28 @@ Keep in mind that the Firefox limitation or security measure mentioned in the la
 
 
 
-## Some tests
+## MIDI event capturing test
 
+This script assumes you have a MIDI device like a keyboard attached to a desktop or laptop computer (the client) and that a study participant is ready to play a song on that instrument. We want to display instructions for what to play in the web browser and record the MIDI events (key presses) of the song, so that we can analyze the performance.
 
-### MIDI event capturing test
+Technically, we listen for MIDI events with the Web MIDI Javascript API in the browser, and send the collected data to our web server with low latency, using web sockets.
 
-See [./midi_capture/ directory](./midi_capture/).
+The source code for this is in the [./midi_capture/](./midi_capture/) directory.
 
-You can use a hardware MIDI generator like a keyboard, but for testing purposes a virtual MIDI keyboard like [VMPK](https://vmpk.sourceforge.io/) will do just as fine.
+If you do not have a physical MIDI instrument, see the instructions in the file [virtual_midi_instrument_setup.md](./virtual_midi_instrument_setup.md) to setup a software MIDI device.
 
-I have its output attached to [loopMIDI](https://www.tobias-erichsen.de/software/loopmidi.html), and from there into FL Studio to synthesize sounds from the MIDI signals, but the FL Studio part is entirely optional of course. We are only interested in the raw MIDI signals here, so if you're fine with using the default software sythesizer, you do not need a separate DAW.
-
-If you do not have a physical MIDI instrument, you will need loopMIDI though. Make sure to start it, create a port (simply click the `Add Port` button labeled `+` on the Setup tab once) and make sure to keep the software running. Running it minified is fine, but it needs to run and have a port configured:
-
-![WebMIDI](./midi_capture/setup_loopmidi.jpg)
-
- The in your virtual MIDI controller like VMPK, configure MIDI routing and set the port you created in loopMIDI as the MIDI output:
-
- ![WebMIDI](./midi_capture/setup_vmpk.jpg)
-
-The Web MIDI API, which is integrated in recent Chrome versions and other browsers, can then pick up the MIDI signals and make them available to your Javascript code (users need to allow MIDI access, like for the camera and mic). For now we simply display the MIDI events on key presses:
-
+When you have properly connected your hardware or software MIDI controller, the Web MIDI API, which is integrated into all mahjor browsers by now, can pick up the MIDI signals and make them available to your Javascript code (users need to allow MIDI access, like for the camera and mic). For now we simply display the MIDI events on key presses:
 
 ![WebMIDI](./midi_capture/webmiditest.jpg)
 
 ### Client / Server fun
 
-This repo now also contains a websocket server based on Python/Flask. If `send_to_server` is set to `true` in webclient\midi.js, the browser will send the MIDI data to the backend server, and the server will reply to confirm that it received the data. The server response is displayed in the browser.
+This repo now also contains a websocket server based on Python/Flask. If `send_to_server` is set to `true` in [midi.js](./midi_capture/webclient/midi.js), the browser will send the MIDI data to the backend server, and the server will reply to confirm that it received the data. The server response is displayed in the browser.
 
 To start the server, install `flask_socketio` via pip, then run `python flask_websocket_server.py` in the server directory.
+
+If you do not want the server, you can simply ignore it. If the resulting connection error messages in the browser console bother you, edit [midi.js](./midi_capture/webclient/midi.js) and set `send_to_server` to `false`.
+
 
 Now open the client in your browser and play some piano.
 
