@@ -1,5 +1,7 @@
 # Setup of a software MIDI keyboard
 
+[Back to README](./README.md)
+
 ## Setup under Windows 10
 
 If you do not have a physical MIDI keyboard, for testing purposes a virtual MIDI keyboard like [VMPK](https://vmpk.sourceforge.io/) will do just as fine.
@@ -18,3 +20,5 @@ You will also need a virtual MIDI cable to make your virtual device appear as a 
 The VMPK tool comes with its own software sythesizer to play sounds from the MIDI events, but you can of course use a custom software sythesizer if you prefer. To do this, make sure you have a everything configured as described above.
 
 Then, start you custom sythesizer software (e.g., a DAW like FL Studio) and configure the MIDI connections in it. You need to attach the output of the loopMIDI port as the input to your DAW. This will allow you to use all the instruments available in your DAW.
+
+[Back to README](./README.md)

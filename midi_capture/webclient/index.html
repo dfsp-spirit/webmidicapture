@@ -8,14 +8,26 @@
 </head>
 <body>
     <h1>MIDI Signal Capture Test</h1>
+    <h3>Settings</h3>
+
     <div>
-        <p id="status_label"><i>MIDI Status:</i></p>
-        <p id="status">current MIDI Status here</p>
+        <p><span id="setting_use_server_status">Not sending data to server.</span></p>
+        <button id="toggleUseServerButton">Toggle use server</button>
     </div>
-    <div>
-        <p id="server_status_label"><i>Server Status:</i></p>
-        <p id="server_status">current server Status here</p>
-    </div>
+
+    <h3 id="heading_status">Status</h3>
+
+    <p id="p_midi_status">
+        <span id="status_label"><i>MIDI Status:</i></span>
+        <span id="status">current MIDI Status here</span>
+    </p>
+
+
+    <p id="p_server_status">
+        <span id="server_status_label"><i>Server Connection Status / Response:</i></span>
+        <span id="server_status">current server Status here</span>
+    </p>
+
 
     <script src="midi.js"></script>
 </body>
