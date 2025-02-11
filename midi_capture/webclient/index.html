@@ -31,34 +31,36 @@
         <span id="server_status">current server Status here</span>
     </p>
     <hr />
-    <h4>Timing info</h3>
-    <p id="p_timing_info_capture_to_server" class="indentedlvl1">
-        Timing info MIDI event to server (ms):
-        <span id="timing_info_midi_event_to_server"></span>
-    </p>
-    <p id="p_timing_stats_capture_to_server" class="indentedlvl2">
-        - Stats (ms):
-        <span id="timing_stats_midi_event_to_server"></span>
-    </p>
-    <hr />
-    <p id="p_timing_info_roundtrip" class="indentedlvl2">
-        Timing info MIDI event to server and back to client (ms):
-        <span id="timing_info_midi_event_to_server_to_client"></span>
-    </p>
-    <p id="p_timing_stats_roundtrip" class="indentedlvl2">
-        - Stats (ms):
-        <span id="timing_stats_midi_event_to_server_to_client"></span>
-    </p>
-    <hr />
-    <h4>Total MIDI messages sent over the network</h3>
-    <p id="p_server_stats_send" class="indentedlvl1">
-        Number of MIDI messages sent to server:
-        <span id="stats_num_server_midi_messages_sent">0</span>
-    </p>
-    <p id="p_server_stats_received" class="indentedlvl1">
-        Number of positive responses received from server:
-        <span id="stats_num_server_responses_received">0</span>
-    </p>
+    <div id="stuff_that_is_shown_only_when_server_is_used" class="hidden">
+        <h4>Timing info</h3>
+        <p id="p_timing_info_capture_to_server" class="indentedlvl1">
+            Timing info MIDI event to server (ms):
+            <span id="timing_info_midi_event_to_server"></span>
+        </p>
+        <p id="p_timing_stats_capture_to_server" class="indentedlvl2">
+            - Stats (ms):
+            <span id="timing_stats_midi_event_to_server"></span>
+        </p>
+        <hr />
+        <p id="p_timing_info_roundtrip" class="indentedlvl2">
+            Timing info MIDI event to server and back to client (ms):
+            <span id="timing_info_midi_event_to_server_to_client"></span>
+        </p>
+        <p id="p_timing_stats_roundtrip" class="indentedlvl2">
+            - Stats (ms):
+            <span id="timing_stats_midi_event_to_server_to_client"></span>
+        </p>
+        <hr />
+        <h4>Total MIDI messages sent over the network</h3>
+        <p id="p_server_stats_send" class="indentedlvl1">
+            Number of MIDI messages sent to server:
+            <span id="stats_num_server_midi_messages_sent">0</span>
+        </p>
+        <p id="p_server_stats_received" class="indentedlvl1">
+            Number of positive responses received from server:
+            <span id="stats_num_server_responses_received">0</span>
+        </p>
+    </div>
 
 
     <script src="midi.js"></script>

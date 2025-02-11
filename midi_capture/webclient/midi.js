@@ -32,6 +32,7 @@ function stats(arr) {
 
 function handleSendToServerChanged(send_to_server) {
     if (send_to_server) {
+        document.getElementById('stuff_that_is_shown_only_when_server_is_used').classList.toggle("hidden");
         document.getElementById('server_status').innerText = `Sending data to server is turned on, but no event sent yet.`;
         socket = io('http://localhost:5000'); // WebSocket server address, see server/ directory.
 
