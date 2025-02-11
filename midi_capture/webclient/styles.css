@@ -1,0 +1,11 @@
+.hidden {
+    display: none;
+  }
+
+.indentedlvl1 {
+    padding-left: 10px; /* Indents the whole block */
+}
+
+.indentedlvl2 {
+    padding-left: 20px; /* Indents the whole block */
+}
