@@ -24,7 +24,7 @@ function stats(arr) {
     return {
       max: Math.max(...arr),
       min: Math.min(...arr),
-      mean: arr.reduce((sum, num) => sum + num, 0) / arr.length
+      mean: (arr.reduce((sum, num) => sum + num, 0) / arr.length).toFixed(2)
     };
   }
 
@@ -32,7 +32,7 @@ function stats(arr) {
 
 function handleSendToServerChanged(send_to_server) {
     if (send_to_server) {
-        document.getElementById('stuff_that_is_shown_only_when_server_is_used').classList.toggle("hidden");
+        document.getElementById('stuff_that_is_shown_only_when_server_is_used').classList.remove("hidden");
         document.getElementById('server_status').innerText = `Sending data to server is turned on, but no event sent yet.`;
         socket = io('http://localhost:5000'); // WebSocket server address, see server/ directory.
 
@@ -60,6 +60,7 @@ function handleSendToServerChanged(send_to_server) {
             socket = null;
         }
         document.getElementById('server_status').innerText = `None (Sending data to server is turned off).`;
+        document.getElementById('stuff_that_is_shown_only_when_server_is_used').classList.add("hidden");
     }
 }
 
@@ -83,6 +84,8 @@ function sendMidiData(midiData) {
             if (response && response.error) {
                 console.error('Error sending MIDI data. Server replied with error: ', response.error);
                 document.getElementById('server_status').innerText = `Error sending MIDI data: ${response.error}`;
+                document.getElementById('server_status').classList.remove('greentext');
+                document.getElementById('server_status').classList.add('redtext');
                 // Handle the error (e.g., retry, notify the user, etc.)
             } else {
                 console.log('MIDI data sent successfully, received server response:', response);
@@ -95,6 +98,8 @@ function sendMidiData(midiData) {
                 addDurationEventToServer(duration_event_to_server);
                 addDurationEventToServerToBrowser(duration_event_to_server_to_browser);
                 document.getElementById('server_status').innerText = `MIDI data sent successfully: ${JSON.stringify(response)}`;
+                document.getElementById('server_status').classList.remove('redtext');
+                document.getElementById('server_status').classList.add('greentext');
             }
         });
         // Update stats on the page
@@ -120,12 +125,22 @@ if (navigator.requestMIDIAccess) {
         .then(onMIDISuccess, onMIDIFailure);
 } else {
     document.getElementById('status').innerText = 'Web MIDI API is not supported in this browser.';
+    document.getElementById('status').classList.remove('greentext');
+    document.getElementById('status').classList.add('redtext');
+    document.getElementById('status_midiaccess').innerText = 'Web MIDI API not supported, no access.';
+    document.getElementById('status_midiaccess').classList.remove('greentext');
+    document.getElementById('status_midiaccess').classList.add('redtext');
 }
 
 // Success callback function
 function onMIDISuccess(midiAccess) {
     console.log('MIDI Access Successful');
-    document.getElementById('status').innerText = 'MIDI access granted. Waiting for MIDI messages. Play your instrument or a virtual device like VMPK...';
+    document.getElementById('status').classList.remove('redtext');
+    document.getElementById('status').classList.add('greentext');
+    document.getElementById('status').innerText = 'Waiting for MIDI messages. Play your instrument or a virtual device like VMPK...';
+    document.getElementById('status_midiaccess').classList.remove('redtext');
+    document.getElementById('status_midiaccess').classList.add('greentext');
+    document.getElementById('status_midiaccess').innerText = 'MIDI access granted.';
 
     // List all MIDI input devices in console
     const inputs = midiAccess.inputs;
@@ -155,7 +170,12 @@ function onMIDISuccess(midiAccess) {
 // Failure callback function
 function onMIDIFailure() {
     console.log('Failed to get MIDI access');
-    document.getElementById('status').innerText = 'Failed to get MIDI access.';
+    document.getElementById('status').innerText = 'Allow MIDI access to continue.';
+    document.getElementById('status').classList.remove('greentext');
+    document.getElementById('status').classList.add('redtext');
+    document.getElementById('status_midiaccess').classList.remove('greentext');
+    document.getElementById('status_midiaccess').classList.add('redtext');
+    document.getElementById('status_midiaccess').innerText = 'Failed to get MIDI access.';
 }
 
 // Handle incoming MIDI messages
