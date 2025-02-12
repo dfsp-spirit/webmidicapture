@@ -2,7 +2,6 @@
 Messing with MIDI in the browser via the Web MIDI Api. A proof-of-concept.
 
 
-
 ## MIDI event capturing test
 
 This script assumes you have a MIDI device like a keyboard attached to a desktop or laptop computer (the client) and that a study participant is ready to play a song on that instrument. We want to display instructions for what to play in the web browser and record the MIDI events (key presses) of the song, so that we can analyze the performance.
@@ -13,18 +12,26 @@ The source code for this is in the [./midi_capture/](./midi_capture/) directory.
 
 If you do not have a physical MIDI instrument, see the instructions in the file [virtual_midi_instrument_setup.md](./virtual_midi_instrument_setup.md) to setup a software MIDI device.
 
-When you have properly connected your hardware or software MIDI controller, the Web MIDI API, which is integrated into all mahjor browsers by now, can pick up the MIDI signals and make them available to your Javascript code (users need to allow MIDI access, like for the camera and mic). For now we simply display the MIDI events on key presses:
+When you have properly connected your hardware or software MIDI controller, the Web MIDI API, which is integrated into all mahjor browsers by now, can pick up the MIDI signals and make them available to your Javascript code (users need to allow MIDI access, like for the camera and mic during video chats). For now we simply display the MIDI events on key presses:
 
 ![WebMIDI](./midi_capture/webmiditest.jpg)
 
 ### Client / Server fun
 
-This repo now also contains a websocket server based on Python/Flask. If `send_to_server` is set to `true` in [midi.js](./midi_capture/webclient/midi.js), the browser will send the MIDI data to the backend server, and the server will reply to confirm that it received the data. The server response is displayed in the browser.
+This repo now also contains a websocket server based on Python/Flask. If you click the button labeled `'Activate sending data to server'`, the browser will send the MIDI data to the backend server, and the server will reply to confirm that it received the data. The server response is displayed in the browser. Timestamps are included so you get a rough impression of latency.
 
-To start the server, install `flask_socketio` via pip, then run `python flask_websocket_server.py` in the server directory.
+To start the server, install `flask_socketio` via pip, then run `python flask_websocket_server.py` in the server directory. More slowly:
 
-If you do not want the server, you can simply ignore it. If the resulting connection error messages in the browser console bother you, edit [midi.js](./midi_capture/webclient/midi.js) and set `send_to_server` to `false`.
+```shell
+git clone https://github.com/dfsp-spirit/webmidiplayground.git webmidiplayground
+cd ./webmidiplayground/midi_capture/server
+python -m venv myvenv
+source myvenv/bin/activate
+pip install flask_socketio
+python flask_websocket_server.py
+```
 
+If you do not want the server, you can simply ignore it.
 
 Now open the client in your browser and play some piano.
 
