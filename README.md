@@ -8,13 +8,13 @@ This script assumes you have a MIDI device like a keyboard attached to a desktop
 
 Technically, we listen for MIDI events with the Web MIDI Javascript API in the browser, and send the collected data to our web server with low latency, using web sockets.
 
-The source code for this is in the [./midi_capture/](./midi_capture/) directory.
+The source code for this is in the [./docs/midi_capture/](./docs/midi_capture/) directory.
 
 If you do not have a physical MIDI instrument, see the instructions in the file [virtual_midi_instrument_setup.md](./virtual_midi_instrument_setup.md) to setup a software MIDI device.
 
 When you have properly connected your hardware or software MIDI controller, the Web MIDI API, which is integrated into all mahjor browsers by now, can pick up the MIDI signals and make them available to your Javascript code (users need to allow MIDI access, like for the camera and mic during video chats). For now we simply display the MIDI events on key presses:
 
-![WebMIDI](./midi_capture/webmiditest.jpg)
+![WebMIDI](./docs/midi_capture/webmiditest.jpg)
 
 ### Client / Server fun
 
@@ -24,7 +24,7 @@ To start the server, install `flask_socketio` via pip, then run `python flask_we
 
 ```shell
 git clone https://github.com/dfsp-spirit/webmidiplayground.git webmidiplayground
-cd ./webmidiplayground/midi_capture/server
+cd ./webmidiplayground/docs/midi_capture/server
 python -m venv myvenv
 source myvenv/bin/activate
 pip install flask_socketio
