@@ -12,9 +12,11 @@ The source code for this is in the [./docs/midi_capture/](./docs/midi_capture/) 
 
 If you do not have a physical MIDI instrument, see the instructions in the file [virtual_midi_instrument_setup.md](./virtual_midi_instrument_setup.md) to setup a software MIDI device.
 
-When you have properly connected your hardware or software MIDI controller, the Web MIDI API, which is integrated into all mahjor browsers by now, can pick up the MIDI signals and make them available to your Javascript code (users need to allow MIDI access, like for the camera and mic during video chats). For now we simply display the MIDI events on key presses:
+When you have properly connected your hardware or software MIDI controller, the Web MIDI API, which is integrated into all major browsers by now, can pick up the MIDI signals and make them available to your Javascript code (users need to allow MIDI access, like for the camera and mic during video chats). For now we simply display the MIDI events on key presses:
 
 ![WebMIDI](./docs/midi_capture/webmiditest.jpg)
+
+One could easily generate sounds from the MIDI event via a Javascript software synthesizer, like the Sample in Tone.js.
 
 ### Client / Server fun
 
