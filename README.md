@@ -53,3 +53,9 @@ If you do not feel like spinning up a local web server and want to simply test l
 #### Deployment requires SSL for Firefox users
 
 Keep in mind that the Firefox limitation or security measure mentioned in the last paragraph also means that if you finally deploy your app for remote users, an SSL certificate/HTTPS is **required** on your web server for it to work under Firefox because on a remote machine, `http://` URLs are of course *not* considered a secure context.
+
+
+## Testing the client online
+
+You can try the client on [github pages here](https://dfsp-spirit.github.io/webmidiplayground).
+
