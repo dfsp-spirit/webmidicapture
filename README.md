@@ -1,5 +1,5 @@
 # webmidiplayground
-Messing with MIDI in the browser via the Web MIDI Api. A proof-of-concept.
+Messing with MIDI in the browser via the Web MIDI Api. A proof-of-concept that demonstrates how to capture MIDI events, like key presses on an e-piano or a MIDI controller attached to the computer, in the browser and react to them.
 
 
 ## MIDI event capturing test
